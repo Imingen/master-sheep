@@ -4,13 +4,10 @@ from datetime import datetime, timedelta
 from seperateBasedOnHeight import seperateImages
 
 PATH_TO_LOGFILES = "/home/login/ntnu/data/loggdata/"
-PATH_TO_EXIF_IMAGE_FOLDER = "/home/login/ntnu/data/test-set-jan/data/"
-
-LOG_TO_IMAGE_MAX_DELTA_TIME = 3     # how many seconds the log entry can be different from the image.
-
-SPLIT_HEIGHT = 50
+PATH_TO_EXIF_IMAGE_FOLDER = "/home/login/ntnu/data/allThermal-2/compiled/"
 INSERT_PATH = "/lustre1/work/johnew/yolov3/sheepData/test-set-jan/data/"
-
+LOG_TO_IMAGE_MAX_DELTA_TIME = 3     # how many seconds the log entry can be different from the image.
+SPLIT_HEIGHT = 50
 
 
 def csvRead(file):
@@ -60,17 +57,9 @@ def readExif(folder):
         
         imagesWithDate.append((image, tags["EXIF DateTimeDigitized"]))
     return imagesWithDate
-    
-def attemptToGetHeight(dateAndAltitude, key):
-    try:
-        value = dateAndAltitude[key]
-        return value
-    except:
-        return False
 
 def toDateTime(string):
     return datetime.strptime(str(string), "%Y:%m:%d %H:%M:%S")
-
 
 def getDateAndAltitudes():
     '''reads all the drone logs and compiles it into a dictionary'''
@@ -87,7 +76,7 @@ def compileData(imagesWithDate, dateAndAltitude):
     print(test[0])
 
     for image, date in imagesWithDate:
-        print("Image ", str(i), "of", len(imagesWithDate), "-------------------------------------------------")
+        print("Image ", str(i), "of", len(imagesWithDate), "-----------------------------------------------------------------")
         i += 1
 
         matchKey = toDateTime(date.values).isoformat()
